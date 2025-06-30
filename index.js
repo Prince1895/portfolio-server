@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
-// CORS Headers for Vercel Preflight Handling
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'https://portfolio-prince-kumar.vercel.app');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -12,12 +12,16 @@ app.use((req, res, next) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   next();
 });
-
-app.use(cors({
+const corsOptions = {
   origin: 'https://portfolio-prince-kumar.vercel.app',
-  methods: ['POST'],
+  methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
-}));
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
+
 app.use(express.json());
 
 app.get('/api/send-email', (req, res) => {
