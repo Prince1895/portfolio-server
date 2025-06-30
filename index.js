@@ -3,8 +3,18 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
+
+// CORS Headers for Vercel Preflight Handling
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://portfolio-prince-kumar.vercel.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  next();
+});
+
 app.use(cors({
-  origin: 'https://portfolio-prince-kumar.vercel.app/', 
+  origin: 'https://portfolio-prince-kumar.vercel.app',
   methods: ['POST'],
   allowedHeaders: ['Content-Type'],
 }));
@@ -21,15 +31,15 @@ app.post('/api/send-email', async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'princechauhanwork01@gmail.com',       
-        pass: 'nxlmngxwbtifpren',          
+        user: 'princechauhanwork01@gmail.com',
+        pass: 'nxlmngxwbtifpren', // App password, never push to GitHub
       },
     });
 
     await transporter.sendMail({
       from: email,
       to: 'princechauhanwork01@gmail.com',
-      subject: `New Message through portfoilio from ${email}`,
+      subject: `New Message through portfolio from ${email}`,
       text: message,
     });
 
@@ -40,8 +50,4 @@ app.post('/api/send-email', async (req, res) => {
   }
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
 module.exports = app;
