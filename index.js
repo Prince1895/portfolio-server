@@ -35,6 +35,17 @@ app.post('/api/send-email', async (req, res) => {
     return res.status(500).json({ success: false, message: 'Email sending failed' });
   }
 });
+router.get("/leetcode/:username", async (req, res) => {
+  try {
+    const username = req.params.username;
+    const response = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+    const data = await response.json();
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch LeetCode stats" });
+  }
+});
 
 const PORT = 5000;
 app.listen(PORT, () => {
