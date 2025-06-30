@@ -20,6 +20,10 @@ app.use(cors({
 }));
 app.use(express.json());
 
+app.get('/api/send-email', (req, res) => {
+  res.send("API is live. Use POST to send email.");
+});
+
 app.post('/api/send-email', async (req, res) => {
   const { email, message } = req.body;
 
