@@ -5,10 +5,13 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 app.use(cors({
-  origin: "https://portfolio-server-six-psi.vercel.app/",
-  credentials: true
+  origin: 'https://portfolio-prince-kumar.vercel.app',
+  methods: ['POST', 'GET', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
 }));
 app.use(express.json());
+
+app.options('/api/send-email', cors());
 
 app.post('/api/send-email', async (req, res) => {
   const { email, message } = req.body;
