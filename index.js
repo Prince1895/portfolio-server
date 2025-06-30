@@ -4,23 +4,7 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://portfolio-prince-kumar.vercel.app');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  next();
-});
-const corsOptions = {
-  origin: 'https://portfolio-prince-kumar.vercel.app',
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true,
-};
-
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
+app.use(cors());
 
 app.use(express.json());
 
@@ -40,7 +24,7 @@ app.post('/send-email', async (req, res) => {
       service: 'gmail',
       auth: {
         user: 'princechauhanwork01@gmail.com',
-        pass: 'nxlmngxwbtifpren', // App password, never push to GitHub
+        pass: 'nxlmngxwbtifpren', 
       },
     });
 
