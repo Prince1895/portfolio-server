@@ -3,15 +3,8 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
-
-app.use(cors({
-  origin: 'https://portfolio-prince-kumar.vercel.app',
-  methods: ['POST', 'GET', 'OPTIONS'],
-  allowedHeaders: ['Content-Type'],
-}));
+app.use(cors());
 app.use(express.json());
-
-app.options('/api/send-email', cors());
 
 app.post('/api/send-email', async (req, res) => {
   const { email, message } = req.body;
@@ -42,7 +35,6 @@ app.post('/api/send-email', async (req, res) => {
     return res.status(500).json({ success: false, message: 'Email sending failed' });
   }
 });
-
 
 const PORT = 5000;
 app.listen(PORT, () => {
