@@ -3,7 +3,11 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://portfolio-prince-kumar.vercel.app/', 
+  methods: ['POST'],
+  allowedHeaders: ['Content-Type'],
+}));
 app.use(express.json());
 
 app.post('/api/send-email', async (req, res) => {
@@ -40,3 +44,4 @@ const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+module.exports = app;
